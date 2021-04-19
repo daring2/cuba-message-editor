@@ -13,7 +13,7 @@ create table MSG_MESSAGE (
     KEY_ varchar(1000) not null,
     LANGUAGE_ varchar(64),
     ACTIVE boolean,
-    MESSAGE varchar(255),
+    TEXT longvarchar,
     --
     primary key (ID)
 )^

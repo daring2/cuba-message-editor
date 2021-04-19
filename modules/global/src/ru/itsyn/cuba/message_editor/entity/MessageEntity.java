@@ -4,6 +4,7 @@ import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -26,8 +27,17 @@ public class MessageEntity extends StandardEntity {
     @Column(name = "ACTIVE")
     private Boolean active;
 
-    @Column(name = "MESSAGE")
-    private String message;
+    @Lob
+    @Column(name = "TEXT")
+    private String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public Boolean getActive() {
         return active;
@@ -35,14 +45,6 @@ public class MessageEntity extends StandardEntity {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getLanguage() {
