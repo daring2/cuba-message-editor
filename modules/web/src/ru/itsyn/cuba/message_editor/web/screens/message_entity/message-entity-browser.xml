@@ -24,7 +24,7 @@
             <columns>
                 <column id="pack"/>
                 <column id="key"/>
-                <column id="language"/>
+                <column id="locale"/>
                 <column id="active"/>
                 <column id="text"/>
             </columns>

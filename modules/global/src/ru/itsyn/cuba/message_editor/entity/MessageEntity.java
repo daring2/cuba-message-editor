@@ -22,7 +22,7 @@ public class MessageEntity extends StandardEntity {
     private String key;
 
     @Column(name = "LANGUAGE_", length = 64)
-    private String language;
+    private String locale;
 
     @Column(name = "ACTIVE")
     private Boolean active;
@@ -47,12 +47,12 @@ public class MessageEntity extends StandardEntity {
         this.active = active;
     }
 
-    public String getLanguage() {
-        return language;
+    public String getLocale() {
+        return locale;
     }
 
-    public void setLanguage(String language) {
-        this.language = language;
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     public String getKey() {

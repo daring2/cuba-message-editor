@@ -12,7 +12,7 @@
         <form id="form" dataContainer="editDc" width="100%">
             <column width="100%">
                 <textField id="packField" property="pack"/>
-                <textField id="languageField" property="language"/>
+                <textField id="localeField" property="locale"/>
                 <textArea id="textField" property="text" colspan="2" rows="5"/>
             </column>
             <column width="100%">
