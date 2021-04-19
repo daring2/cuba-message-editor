@@ -11,6 +11,7 @@
     </module>
     <module name="core" dependsOn="global" blocks="core">
         <artifact name="message-editor-core" appJar="true"/>
+        <artifact name="message-editor-core" classifier="db" ext="zip" configuration="dbscripts"/>
 
         <property name="cuba.springContextConfig" value="+ru/itsyn/cuba/message_editor/spring.xml"/>
         <property name="cuba.mainMessagePack" value="+ru.itsyn.cuba.message_editor.core"/>

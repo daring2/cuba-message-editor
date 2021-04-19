@@ -123,7 +123,7 @@ configure(coreModule) {
 
     publishing.publications {
         maven(MavenPublication) {
-//            artifact dbScriptsArchive
+            artifact dbScriptsArchive
         }
     }
 

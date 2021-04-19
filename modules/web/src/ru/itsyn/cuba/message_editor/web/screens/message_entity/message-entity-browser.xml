@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        messagesPack="ru.itsyn.cuba.message_editor.web.screens.message_entity"
+        caption="msg://messageEntityBrowser.caption" focusComponent="table">
+    <data readOnly="true">
+        <collection id="tableDc" class="ru.itsyn.cuba.message_editor.entity.MessageEntity" view="_local">
+            <loader id="tableDl">
+                <query>select e from msg_MessageEntity e order by e.pack, e.key</query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="768" width="1024"/>
+    <layout expand="table" spacing="true">
+        <filter id="filter" applyTo="table" dataLoader="tableDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="table" width="100%" dataContainer="tableDc"
+                    multiselect="true" presentations="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="pack"/>
+                <column id="key"/>
+                <column id="language"/>
+                <column id="active"/>
+                <column id="message"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel" alwaysVisible="true">
+                <button id="createBtn" action="table.create"/>
+                <button id="editBtn" action="table.edit"/>
+                <button id="removeBtn" action="table.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
