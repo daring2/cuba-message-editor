@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <views xmlns="http://schemas.haulmont.com/cuba/view.xsd">
-
+    <view class="ru.itsyn.cuba.message_editor.entity.MessageEntity" name="full" extends="_local" systemProperties="true"/>
 </views>

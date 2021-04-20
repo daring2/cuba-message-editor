@@ -3,7 +3,7 @@
         messagesPack="ru.itsyn.cuba.message_editor.web.screens.message_entity"
         caption="msg://messageEntityEditor.caption" focusComponent="form">
     <data>
-        <instance id="editDc" class="ru.itsyn.cuba.message_editor.entity.MessageEntity" view="_local">
+        <instance id="editDc" class="ru.itsyn.cuba.message_editor.entity.MessageEntity" view="full">
             <loader/>
         </instance>
     </data>

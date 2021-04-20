@@ -3,7 +3,7 @@
         messagesPack="ru.itsyn.cuba.message_editor.web.screens.message_entity"
         caption="msg://messageEntityBrowser.caption" focusComponent="table">
     <data readOnly="true">
-        <collection id="tableDc" class="ru.itsyn.cuba.message_editor.entity.MessageEntity" view="_local">
+        <collection id="tableDc" class="ru.itsyn.cuba.message_editor.entity.MessageEntity" view="full">
             <loader id="tableDl">
                 <query>select e from msg_MessageEntity e order by e.pack, e.key</query>
             </loader>
@@ -20,6 +20,7 @@
                 <action id="create" type="create"/>
                 <action id="edit" type="edit"/>
                 <action id="remove" type="remove"/>
+                <action id="applyChanges" caption="mainMsg://actions.Apply"/>
             </actions>
             <columns>
                 <column id="pack"/>
@@ -33,6 +34,7 @@
                 <button id="createBtn" action="table.create"/>
                 <button id="editBtn" action="table.edit"/>
                 <button id="removeBtn" action="table.remove"/>
+                <button id="applyChangesBtn" action="table.applyChanges"/>
             </buttonsPanel>
         </groupTable>
         <hbox id="lookupActions" spacing="true" visible="false">
