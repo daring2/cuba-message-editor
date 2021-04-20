@@ -16,6 +16,12 @@ public class ClientMessages extends MessagesClientImpl {
     protected MessageEntityCache messageCache;
 
     @Override
+    protected void init() {
+        super.init();
+        //TODO update messageCache
+    }
+
+    @Override
     protected String searchMessage(String packs, String key, Locale locale, Locale truncatedLocale, Set<String> passedPacks) {
         var message = messageCache.getMessage(packs, key, locale);
         if (message != null)
