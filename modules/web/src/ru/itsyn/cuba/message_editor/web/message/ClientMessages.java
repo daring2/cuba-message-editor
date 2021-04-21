@@ -32,8 +32,12 @@ public class ClientMessages extends MessagesClientImpl {
     @Override
     public void clearCache() {
         messageService.refreshCache();
-        messageCache.update(messageService.getActiveMessages());
+        updateCache();
         super.clearCache();
+    }
+
+    protected void updateCache() {
+        messageCache.update(messageService.getActiveMessages());
     }
 
 }
