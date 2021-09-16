@@ -2,4 +2,6 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <item screen="msg_MessageEntity.browse" insertAfter="sec$Role.browse"
           caption="mainMsg://menu_config.msg_MessageEntity.browse"/>
+    <item screen="msg_Caption.browse" insertAfter="msg_MessageEntity.browse"
+          caption="mainMsg://menu_config.msg_Caption.browse"/>
 </menu-config>
