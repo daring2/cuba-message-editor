@@ -11,7 +11,7 @@ create table MSG_MESSAGE (
     --
     PACK varchar(1000) not null,
     KEY_ varchar(1000) not null,
-    LANGUAGE_ varchar(64),
+    LOCALE varchar(64),
     ACTIVE boolean,
     TEXT longvarchar,
     --

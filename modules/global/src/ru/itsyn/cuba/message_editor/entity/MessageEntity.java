@@ -13,15 +13,16 @@ import javax.validation.constraints.NotNull;
 public class MessageEntity extends StandardEntity {
     private static final long serialVersionUID = -8384518811402955112L;
 
-    @Column(name = "PACK", nullable = false, length = 1000)
     @NotNull
+    @Column(name = "PACK", nullable = false, length = 1000)
     private String pack;
 
-    @Column(name = "KEY_", nullable = false, length = 1000)
     @NotNull
+    @Column(name = "KEY_", nullable = false, length = 1000)
     private String key;
 
-    @Column(name = "LANGUAGE_", length = 64)
+    @NotNull
+    @Column(name = "LOCALE_", nullable = false, length = 64)
     private String locale;
 
     @Column(name = "ACTIVE")
