@@ -10,7 +10,7 @@
     <dialogMode height="768" width="1024"/>
     <layout expand="table" spacing="true">
         <hbox margin="true" spacing="true">
-            <label value="msg://entityLookup.caption"/>
+            <label value="msg://entityLookup.caption" align="MIDDLE_LEFT"/>
             <lookupField id="entityLookup"/>
         </hbox>
         <groupTable id="table" width="100%" dataContainer="tableDc"
