@@ -1,12 +1,14 @@
 package ru.itsyn.cuba.message_editor.web.screens.message_entity;
 
 import com.haulmont.cuba.core.global.Messages;
+import com.haulmont.cuba.gui.Route;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.message_editor.entity.MessageEntity;
 
 import javax.inject.Inject;
 
+@Route("messages")
 @UiController("msg_MessageEntity.browse")
 @UiDescriptor("message-entity-browser.xml")
 @LookupComponent("table")

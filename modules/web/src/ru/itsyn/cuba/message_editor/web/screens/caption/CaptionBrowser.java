@@ -5,6 +5,7 @@ import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.MessageTools;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.gui.Route;
 import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
 import com.haulmont.cuba.gui.components.LookupField;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
+@Route("captions")
 @UiController("msg_Caption.browse")
 @UiDescriptor("caption-browser.xml")
 @LookupComponent("table")

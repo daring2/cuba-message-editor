@@ -22,7 +22,7 @@ public class MessageEntity extends StandardEntity {
     private String key;
 
     @NotNull
-    @Column(name = "LOCALE_", nullable = false, length = 64)
+    @Column(name = "LOCALE", nullable = false, length = 64)
     private String locale;
 
     @Column(name = "ACTIVE")

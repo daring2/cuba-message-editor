@@ -6,6 +6,9 @@
         <instance id="editDc" class="ru.itsyn.cuba.message_editor.entity.MessageEntity" view="full">
             <loader/>
         </instance>
+        <collection id="messagesDc" class="ru.itsyn.cuba.message_editor.entity.MessageEntity" view="full">
+            <loader id="messagesDl"/>
+        </collection>
     </data>
     <dialogMode height="768" width="1024"/>
     <layout expand="editActions" spacing="true" >
@@ -18,6 +21,14 @@
                 <textField id="keyField" property="key"/>
             </column>
         </form>
+        <table id="messagesTable" dataContainer="messagesDc" height="200" width="100%"
+               caption="msg://captions">
+            <columns>
+                <column id="locale"/>
+                <column id="text"/>
+                <column id="defaultText" caption="defaultText"/>
+            </columns>
+        </table>
         <hbox id="editActions" spacing="true">
             <button action="windowCommitAndClose"/>
             <button action="windowCommit"/>

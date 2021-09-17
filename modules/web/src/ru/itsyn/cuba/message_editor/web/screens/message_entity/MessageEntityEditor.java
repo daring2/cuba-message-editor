@@ -1,6 +1,7 @@
 package ru.itsyn.cuba.message_editor.web.screens.message_entity;
 
 import com.haulmont.cuba.core.global.GlobalConfig;
+import com.haulmont.cuba.gui.Route;
 import com.haulmont.cuba.gui.components.LookupField;
 import com.haulmont.cuba.gui.components.TextArea;
 import com.haulmont.cuba.gui.model.InstanceContainer.ItemPropertyChangeEvent;
@@ -11,6 +12,7 @@ import ru.itsyn.cuba.message_editor.web.screens.util.MessageEntityHelper;
 import javax.inject.Inject;
 import java.util.LinkedHashMap;
 
+@Route(value = "messages/edit", parentPrefix = "messages")
 @UiController("msg_MessageEntity.edit")
 @UiDescriptor("message-entity-editor.xml")
 @EditedEntityContainer("editDc")
