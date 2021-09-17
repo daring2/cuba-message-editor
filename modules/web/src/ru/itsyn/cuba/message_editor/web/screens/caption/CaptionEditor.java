@@ -6,6 +6,7 @@ import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.Route;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.model.DataContext;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.message_editor.entity.MessageEntity;
 import ru.itsyn.cuba.message_editor.web.screens.util.MessageEntityHelper;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Route(value = "captions/edit", parentPrefix = "captions")
 @UiController("msg_Caption.edit")
@@ -88,6 +91,15 @@ public class CaptionEditor extends StandardEditor<MessageEntity> {
     protected Component newDefaultTextCell(MessageEntity entity) {
         var text = messageEntityHelper.getDefaultText(entity);
         return new Table.PlainTextCell(text);
+    }
+
+    @Subscribe(target = Target.DATA_CONTEXT)
+    public void onPreCommit(DataContext.PreCommitEvent event) {
+        event.getModifiedInstances().remove(getEditedEntity());
+        event.getModifiedInstances().removeIf(e -> {
+            var me = (MessageEntity) e;
+            return isBlank(me.getText());
+        });
     }
 
 }
