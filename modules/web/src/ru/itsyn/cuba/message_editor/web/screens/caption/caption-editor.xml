@@ -21,11 +21,12 @@
                 <textField id="keyField" property="key"/>
             </column>
         </form>
-        <table id="messagesTable" dataContainer="messagesDc" height="200" width="100%"
-               caption="msg://captions">
+        <table id="messagesTable" dataContainer="messagesDc" editable="true"
+               height="200" width="100%" caption="msg://captions">
             <columns>
                 <column id="locale"/>
-                <column id="text"/>
+                <column id="text" editable="true"/>
+                <column id="active" editable="true" width="100" align="CENTER"/>
                 <column id="defaultText" caption="defaultText"/>
             </columns>
         </table>
