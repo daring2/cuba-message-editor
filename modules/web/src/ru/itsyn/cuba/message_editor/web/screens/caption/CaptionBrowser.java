@@ -5,8 +5,10 @@ import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.MessageTools;
 import com.haulmont.cuba.core.global.Messages;
 import com.haulmont.cuba.core.global.Metadata;
+import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
 import com.haulmont.cuba.gui.components.LookupField;
+import com.haulmont.cuba.gui.components.Table;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.message_editor.entity.MessageEntity;
@@ -32,11 +34,15 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
     @Inject
     protected MessageTools messageTools;
     @Inject
+    protected ScreenBuilders screenBuilders;
+    @Inject
     protected MessageEntityHelper messageEntityHelper;
     @Inject
     protected LookupField<MetaClass> entityLookup;
     @Inject
     protected CollectionLoader<MessageEntity> tableDl;
+    @Inject
+    protected Table<MessageEntity> table;
 
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
@@ -49,9 +55,7 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
                 .sorted(comparing(MetaClass::getName))
                 .collect(Collectors.toList());
         entityLookup.setOptionsList(mcs);
-        entityLookup.setOptionCaptionProvider(mc ->
-                messageTools.getEntityCaption(mc) + " (" + mc.getName() + ")"
-        );
+        entityLookup.setOptionCaptionProvider(messageTools::getDetailedEntityCaption);
         entityLookup.addValueChangeListener(e -> tableDl.load());
     }
 
@@ -67,6 +71,13 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
         }
         rs.sort(comparing(MessageEntity::getText));
         return rs;
+    }
+
+    @Subscribe("table.edit")
+    public void onEdit(ActionPerformedEvent event) {
+        screenBuilders.editor(table)
+                .withScreenClass(CaptionEditor.class)
+                .show();
     }
 
     @Subscribe("table.applyChanges")

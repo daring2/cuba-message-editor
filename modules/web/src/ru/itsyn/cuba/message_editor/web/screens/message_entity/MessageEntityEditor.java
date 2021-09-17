@@ -5,7 +5,7 @@ import com.haulmont.cuba.gui.components.TextArea;
 import com.haulmont.cuba.gui.model.InstanceContainer.ItemPropertyChangeEvent;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.message_editor.entity.MessageEntity;
-import ru.itsyn.cuba.message_editor.web.message.DefaultMessages;
+import ru.itsyn.cuba.message_editor.web.screens.util.MessageEntityHelper;
 
 import javax.inject.Inject;
 
@@ -16,7 +16,7 @@ import javax.inject.Inject;
 public class MessageEntityEditor extends StandardEditor<MessageEntity> {
 
     @Inject
-    protected DefaultMessages defaultMessages;
+    protected MessageEntityHelper messageEntityHelper;
     @Inject
     protected TextArea<String> defaultTextField;
 
@@ -32,9 +32,8 @@ public class MessageEntityEditor extends StandardEditor<MessageEntity> {
 
     protected void updateDefaultText() {
         var entity = getEditedEntity();
-        var locale = LocaleResolver.resolve(entity.getLocale());
-        var defaultText = defaultMessages.getMessage(entity.getPack(), entity.getKey(), locale);
-        defaultTextField.setValue(defaultText);
+        var text = messageEntityHelper.getDefaultText(entity);
+        defaultTextField.setValue(text);
     }
 
 }
