@@ -10,10 +10,8 @@ import java.util.Map;
 
 import static com.haulmont.cuba.core.global.LocaleResolver.localeToString;
 
-@Component(MessageEntityCache.NAME)
+@Component("msg_MessageEntityCache")
 public class MessageEntityCache {
-
-    public static final String NAME = "msg_MessageEntityCache";
 
     protected volatile Map<String, MessageEntity> data = new HashMap<>();
 

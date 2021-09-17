@@ -8,10 +8,8 @@ import ru.itsyn.cuba.message_editor.entity.MessageEntity;
 
 import javax.inject.Inject;
 
-@Component
+@Component("msg_MessageEntityHelper")
 public class MessageEntityHelper {
-
-    public static final String NAME = "msg_MessageEntityHelper";
 
     @Inject
     protected MessageTools messageTools;

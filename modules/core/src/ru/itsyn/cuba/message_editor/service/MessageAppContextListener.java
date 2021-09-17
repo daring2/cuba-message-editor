@@ -7,10 +7,8 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 
-@Component(MessageAppContextListener.NAME)
+@Component("msg_MessageAppContextListener")
 public class MessageAppContextListener {
-
-    public static final String NAME = "msg_MessageAppContextListener";
 
     @Inject
     protected Authentication authentication;
