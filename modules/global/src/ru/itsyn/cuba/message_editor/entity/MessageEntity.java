@@ -1,5 +1,6 @@
 package ru.itsyn.cuba.message_editor.entity;
 
+import com.haulmont.chile.core.annotations.NamePattern;
 import com.haulmont.cuba.core.entity.StandardEntity;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotNull;
 
 @Table(name = "MSG_MESSAGE")
 @Entity(name = "msg_MessageEntity")
+@NamePattern("%s|key")
 public class MessageEntity extends StandardEntity {
     private static final long serialVersionUID = -8384518811402955112L;
 

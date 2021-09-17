@@ -6,7 +6,7 @@ import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.gui.Route;
 import com.haulmont.cuba.gui.components.Component;
 import com.haulmont.cuba.gui.components.Table;
-import com.haulmont.cuba.gui.model.DataContext;
+import com.haulmont.cuba.gui.model.DataContext.PreCommitEvent;
 import com.haulmont.cuba.gui.screen.*;
 import ru.itsyn.cuba.message_editor.entity.MessageEntity;
 import ru.itsyn.cuba.message_editor.web.screens.util.MessageEntityHelper;
@@ -94,7 +94,7 @@ public class CaptionEditor extends StandardEditor<MessageEntity> {
     }
 
     @Subscribe(target = Target.DATA_CONTEXT)
-    public void onPreCommit(DataContext.PreCommitEvent event) {
+    public void onPreCommit(PreCommitEvent event) {
         event.getModifiedInstances().remove(getEditedEntity());
         event.getModifiedInstances().removeIf(e -> {
             var me = (MessageEntity) e;
