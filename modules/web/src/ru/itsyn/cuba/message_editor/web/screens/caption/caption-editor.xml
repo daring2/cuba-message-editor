@@ -27,7 +27,7 @@
                 <column id="locale"/>
                 <column id="text" editable="true"/>
                 <column id="active" editable="true" width="100" align="CENTER"/>
-                <column id="defaultText" caption="defaultText"/>
+                <column id="defaultText" caption="msg://defaultText"/>
             </columns>
         </table>
         <hbox id="editActions" spacing="true">
