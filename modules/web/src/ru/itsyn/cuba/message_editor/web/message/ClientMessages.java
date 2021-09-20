@@ -46,4 +46,10 @@ public class ClientMessages extends MessagesClientImpl {
         messageCache.update(messageService.getActiveMessages());
     }
 
+    public Set<String> loadMessageKeys(String pack) {
+        var path = "/" + pack.replaceAll("\\.", "/");
+        var props = loadPropertiesFromResource(path, null, null);
+        return props.stringPropertyNames();
+    }
+
 }

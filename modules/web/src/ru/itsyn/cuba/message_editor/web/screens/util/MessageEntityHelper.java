@@ -4,6 +4,7 @@ import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.chile.core.model.MetaProperty;
 import com.haulmont.cuba.core.global.LocaleResolver;
 import com.haulmont.cuba.core.global.MessageTools;
+import com.haulmont.cuba.core.global.Messages;
 import org.springframework.stereotype.Component;
 import ru.itsyn.cuba.message_editor.entity.MessageEntity;
 import ru.itsyn.cuba.message_editor.web.message.DefaultMessages;
@@ -14,9 +15,11 @@ import javax.inject.Inject;
 public class MessageEntityHelper {
 
     @Inject
-    protected DefaultMessages defaultMessages;
+    protected Messages messages;
     @Inject
     protected MessageTools messageTools;
+    @Inject
+    protected DefaultMessages defaultMessages;
 
     public String getDefaultText( MessageEntity me) {
         var validKey = me.getPack() != null
@@ -26,6 +29,14 @@ public class MessageEntityHelper {
             return null;
         var locale = LocaleResolver.resolve(me.getLocale());
         return defaultMessages.getMessage(me.getPack(), me.getKey(), locale);
+    }
+
+    public MessageEntity createMessageEntity(String pack, String key) {
+        var e = new MessageEntity();
+        e.setPack(pack);
+        e.setKey(key);
+        e.setText(messages.getMessage(pack, key));
+        return e;
     }
 
     public MessageEntity createMessageEntity(MetaClass mc) {

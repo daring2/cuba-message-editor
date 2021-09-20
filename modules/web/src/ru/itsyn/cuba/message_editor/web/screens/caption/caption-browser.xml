@@ -12,8 +12,6 @@
         <hbox margin="true" spacing="true">
             <label value="msg://entityLookup.caption" align="MIDDLE_LEFT"/>
             <lookupField id="entityLookup" width="300"/>
-            <label value="msg://screenLookup.caption" align="MIDDLE_LEFT"/>
-            <lookupField id="screenLookup" width="300"/>
         </hbox>
         <groupTable id="table" width="100%" dataContainer="tableDc"
                     multiselect="true" presentations="true">
