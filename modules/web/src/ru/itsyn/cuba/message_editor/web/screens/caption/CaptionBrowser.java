@@ -10,17 +10,24 @@ import com.haulmont.cuba.gui.ScreenBuilders;
 import com.haulmont.cuba.gui.components.Action.ActionPerformedEvent;
 import com.haulmont.cuba.gui.components.LookupField;
 import com.haulmont.cuba.gui.components.Table;
+import com.haulmont.cuba.gui.config.WindowConfig;
+import com.haulmont.cuba.gui.config.WindowInfo;
 import com.haulmont.cuba.gui.model.CollectionLoader;
 import com.haulmont.cuba.gui.screen.*;
+import com.haulmont.cuba.gui.sys.ScreensHelper;
 import ru.itsyn.cuba.message_editor.entity.MessageEntity;
 import ru.itsyn.cuba.message_editor.web.screens.util.MessageEntityHelper;
 
 import javax.inject.Inject;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.TreeMap;
 
+import static com.haulmont.cuba.core.global.MessageTools.MAIN_MARK;
 import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toMap;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Route("captions")
 @UiController("msg_Caption.browse")
@@ -32,15 +39,21 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
     @Inject
     protected Metadata metadata;
     @Inject
+    protected WindowConfig windowConfig;
+    @Inject
     protected Messages messages;
     @Inject
     protected MessageTools messageTools;
     @Inject
     protected ScreenBuilders screenBuilders;
     @Inject
+    protected ScreensHelper screensHelper;
+    @Inject
     protected MessageEntityHelper messageEntityHelper;
     @Inject
     protected LookupField<MetaClass> entityLookup;
+    @Inject
+    protected LookupField<WindowInfo> screenLookup;
     @Inject
     protected CollectionLoader<MessageEntity> tableDl;
     @Inject
@@ -49,16 +62,22 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
     @Subscribe
     public void onBeforeShow(BeforeShowEvent event) {
         initEntityLookup();
+        initScreenLookup();
     }
 
     protected void initEntityLookup() {
         var mcs = metadata.getModels().stream()
                 .flatMap(m -> m.getClasses().stream())
-                .sorted(comparing(MetaClass::getName))
-                .collect(Collectors.toList());
-        entityLookup.setOptionsList(mcs);
-        entityLookup.setOptionCaptionProvider(messageTools::getDetailedEntityCaption);
+                .collect(toMap(messageTools::getDetailedEntityCaption, mc -> mc));
+        entityLookup.setOptionsMap(new TreeMap<>(mcs));
         entityLookup.addValueChangeListener(e -> tableDl.load());
+    }
+
+    protected void initScreenLookup() {
+        var screens = windowConfig.getWindows().stream()
+                .collect(toMap(this::getScreenCaption, w -> w, (w1, w2) -> w2));
+        screenLookup.setOptionsMap(new TreeMap<>(screens));
+        screenLookup.addValueChangeListener(e -> tableDl.load());
     }
 
     @Install(to = "tableDl", target = Target.DATA_LOADER)
@@ -85,6 +104,17 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
     @Subscribe("table.applyChanges")
     public void onApplyChanges(ActionPerformedEvent event) {
         messages.clearCache();
+    }
+
+    protected String getScreenCaption(WindowInfo wi) {
+        try {
+            var caption = screensHelper.getScreenCaption(wi);
+            if (isNotBlank(caption) && !caption.startsWith(MAIN_MARK))
+                return caption + " (" + wi.getId() + ")";
+        } catch (FileNotFoundException e) {
+            // ignore
+        }
+        return wi.getId();
     }
 
 }
