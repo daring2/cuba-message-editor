@@ -64,6 +64,7 @@ public class CaptionEditor extends StandardEditor<MessageEntity> {
             me.setPack(entity.getPack());
             me.setKey(entity.getKey());
             me.setLocale(locale);
+            me.setActive(true);
             messages.add(me);
         }
         return messages;
