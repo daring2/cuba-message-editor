@@ -22,7 +22,8 @@
             </column>
         </form>
         <table id="messagesTable" dataContainer="messagesDc" editable="true"
-               height="200" width="100%" caption="msg://captions">
+               height="200" width="100%" textSelectionEnabled="true"
+               caption="msg://captions">
             <columns>
                 <column id="locale"/>
                 <column id="text" editable="true"/>
