@@ -20,7 +20,6 @@ import ru.itsyn.cuba.message_editor.web.screens.util.MessageEntityHelper;
 import javax.inject.Inject;
 import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.Objects;
 import java.util.TreeMap;
 
 @Route("captions")
@@ -63,8 +62,8 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
         );
         metadata.getClasses().stream()
                 .flatMap(mc -> mc.getOwnProperties().stream())
-                .map(mp -> mp.getRange().isEnum() ? mp.getRange().asEnumeration() : null)
-                .filter(Objects::nonNull)
+                .filter(mp -> mp.getRange().isEnum())
+                .map(mp -> mp.getRange().asEnumeration())
                 .forEach(dt -> opts.put(dt.getJavaClass().getSimpleName(), dt));
         windowConfig.getWindows().forEach(w ->
                 opts.put(getScreenCaption(w), w)
