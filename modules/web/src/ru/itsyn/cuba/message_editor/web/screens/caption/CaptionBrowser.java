@@ -1,6 +1,5 @@
 package ru.itsyn.cuba.message_editor.web.screens.caption;
 
-import com.haulmont.chile.core.model.MetaClass;
 import com.haulmont.cuba.core.global.LoadContext;
 import com.haulmont.cuba.core.global.MessageTools;
 import com.haulmont.cuba.core.global.Metadata;
@@ -20,13 +19,9 @@ import ru.itsyn.cuba.message_editor.web.screens.util.MessageEntityHelper;
 
 import javax.inject.Inject;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeMap;
-
-import static com.haulmont.cuba.gui.sys.ScreenUtils.getScreenMessagePack;
-import static java.util.Comparator.comparing;
-import static java.util.stream.Collectors.toMap;
 
 @Route("captions")
 @UiController("msg_Caption.browse")
@@ -63,12 +58,16 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
 
     protected void initEntityLookup() {
         var opts = new TreeMap<String, Object>();
-        opts.putAll(metadata.getModels().stream()
-                .flatMap(m -> m.getClasses().stream())
-                .collect(toMap(messageTools::getDetailedEntityCaption, mc -> mc))
+        metadata.getClasses().forEach(mc ->
+                opts.put(messageTools.getDetailedEntityCaption(mc), mc)
         );
-        opts.putAll(windowConfig.getWindows().stream()
-                .collect(toMap(this::getScreenCaption, w -> w, (w1, w2) -> w2))
+        metadata.getClasses().stream()
+                .flatMap(mc -> mc.getOwnProperties().stream())
+                .map(mp -> mp.getRange().isEnum() ? mp.getRange().asEnumeration() : null)
+                .filter(Objects::nonNull)
+                .forEach(dt -> opts.put(dt.getJavaClass().getSimpleName(), dt));
+        windowConfig.getWindows().forEach(w ->
+                opts.put(getScreenCaption(w), w)
         );
         entityLookup.setOptionsMap(opts);
         entityLookup.addValueChangeListener(e -> tableDl.load());
@@ -76,24 +75,8 @@ public class CaptionBrowser extends StandardLookup<MessageEntity> {
 
     @Install(to = "tableDl", target = Target.DATA_LOADER)
     protected List<MessageEntity> loadDelegate(LoadContext<MessageEntity> loadContext) {
-        var rs = new ArrayList<MessageEntity>();
         var ev = entityLookup.getValue();
-        if (ev instanceof MetaClass) {
-            var mc = (MetaClass) ev;
-            rs.add(messageEntityHelper.createMessageEntity(mc));
-            for (var mp : mc.getProperties()) {
-                rs.add(messageEntityHelper.createMessageEntity(mp));
-            }
-        } else if (ev instanceof WindowInfo) {
-            var wi = (WindowInfo) ev;
-            var pack = getScreenMessagePack(screensHelper, wi);
-            var keys = messages.loadMessageKeys(pack);
-            for (var key : keys) {
-                rs.add(messageEntityHelper.createMessageEntity(pack, key));
-            }
-        }
-        rs.sort(comparing(MessageEntity::getText));
-        return rs;
+        return messageEntityHelper.createMessageEntities(ev);
     }
 
     @Subscribe("table.edit")
